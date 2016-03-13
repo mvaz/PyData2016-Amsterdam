@@ -12,7 +12,7 @@ def loop_return_computation(lib, snapshot='alpha'):
     for stock in lib.list_symbols(snapshot=snapshot):
         s = lib.read(stock, date_range=DateRange(dt(1999, 12, 1), dt(2016, 3, 8)), as_of='alpha')
         df_returns = s.data['Adj. Close'].pct_change()
-        s.data['Returns'] = df_returns
+        s.data['Returns'] = df_returns.fillna(method='pad', limit=1)
         lib.write(stock, s.data)
 
 
